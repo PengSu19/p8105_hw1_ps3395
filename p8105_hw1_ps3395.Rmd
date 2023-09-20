@@ -1,5 +1,5 @@
 ---
-title: "p8105_hw1_ps3395.Rmd"
+title: "p8105_hw1_ps3395"
 author: "PENG"
 date: "2023-09-17"
 output: github_document
@@ -8,4 +8,30 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Problem 1
+### Preparatory work
+
+library packages
+
+```{r message=FALSE}
+library(moderndive)
+```
+
+Load the data
+
+```{r P1}
+data("early_january_weather")
+tail(early_january_weather, 3)
+```
+
+Dataset description:
+
+Above table shows the last 3 rows of the dataset *'early_january_weather'* which represent the hourly meterological data for EWR for January 2013 with `r ncol(early_january_weather)` columns and `r nrow(early_january_weather)` rows.
+
+The *'early_january_weather'* dataset includes 15 variables such as:
+
+*  `origin`: The Weather station, in this dataset, it only contains `EWR`.
+*  `year`, `month`, `day`, `hour`: The recording time.
+*  `temp`: The temperature in F, and the average temperature is `r round(mean(early_january_weather$temp),2)` (round to 2 decimal)
 
