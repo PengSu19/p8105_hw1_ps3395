@@ -26,7 +26,7 @@ data("early_january_weather")
 tail(early_january_weather, 3)
 ```
 
-#### Dataset description:
+#### Dataset description
 
 Above table shows the last 3 rows of the dataset *'early_january_weather'* which represent the hourly meterological data for EWR for January 2013 with `r ncol(early_january_weather)` columns and `r nrow(early_january_weather)` rows.
 
@@ -39,20 +39,25 @@ The *'early_january_weather'* dataset includes 15 variables such as:
 #### Scatterplot
 
 ```{r plot}
-p <- ggplot(early_january_weather, aes(time_hour, temp, color = humid)) + 
+scatter_plot <- ggplot(early_january_weather, aes(time_hour, temp, color = humid)) +
   geom_point()+
   xlab("Time_Hour")+
   ylab("Temperature")+
   theme_bw()
-
-p
 ```
+
+#### Scatter plot description
+
+From scatter plot of temperature and time hour shows below, it is noticeable that although there are significant and persistent fluctuations in the temperature measured by weather station in January, the overall trend for temperature is gradually increasing over the time, and peaking after January 14 which reaches `r max(early_january_weather$temp)` degrees Fahrenheit. Meanwhile, the relative humidity is relatively high from about January 12 to 14, which is shown as a light blue dots in Figure 1.
 
 saving plot
 ```{r message=FALSE}
-ggsave("scatterplot.jpg",p)
+ggsave("scatterplot.png",scatter_plot)
 ```
 
+```{r scatter, echo=FALSE, fig.cap= "Figure 1",fig.align='center',out.width='60%'}
+knitr::include_graphics("scatterplot.png")
+```
 
 
 
