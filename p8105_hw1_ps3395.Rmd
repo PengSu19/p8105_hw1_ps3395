@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r message=FALSE}
 library(moderndive)
 library(ggplot2)
+library(tidyverse)
 ```
 
 #### Load the data
@@ -38,6 +39,8 @@ The *'early_january_weather'* dataset includes 15 variables such as:
 
 #### Scatterplot
 
+Plot a scatterplot of `temp` and `time_hour`, colored by `humid` variable using `ggplot()`.
+
 ```{r plot}
 scatter_plot <- ggplot(early_january_weather, aes(time_hour, temp, color = humid)) +
   geom_point()+
@@ -51,6 +54,7 @@ scatter_plot <- ggplot(early_january_weather, aes(time_hour, temp, color = humid
 From scatter plot of temperature and time hour shows below, it is noticeable that although there are significant and persistent fluctuations in the temperature measured by weather station in January, the overall trend for temperature is gradually increasing over the time, and peaking after January 14 which reaches `r max(early_january_weather$temp)` degrees Fahrenheit. Meanwhile, the relative humidity is relatively high from about January 12 to 14, which is shown as a light blue dots in Figure 1.
 
 saving plot
+
 ```{r message=FALSE}
 ggsave("scatterplot.png",scatter_plot)
 ```
@@ -59,5 +63,53 @@ ggsave("scatterplot.png",scatter_plot)
 knitr::include_graphics("scatterplot.png")
 ```
 
+## Problem 2
 
+### Creating dataframe
 
+Creating a data frame comprised of numeric, logical, character and factor variables.
+
+```{r}
+sample_df <- tibble(
+  num_random = rnorm(10, mean = 0, sd = 1),
+  log_ver = num_random > 0,
+  cha_ver = c("A","B","C","D","E","F","G","H","I","J"),
+  factor_ver = factor(c("large","large","large","large","mid","mid","mid","small","small","small"),levels = c("large", "mid", "small"))
+)
+```
+
+#### Taking the mean of each variable in dataframe using `mean()` function.
+
+`mean()` function works with numeric and logical arguments, which are `num_random` and `log_ver` in `sample_df`.
+
+```{r}
+mean_num = mean(pull(sample_df,num_random))
+mean_log = mean(pull(sample_df,log_ver))
+mean_num
+mean_log
+```
+
+`mean()` function does not works with arguments that are not numeric or logical and will return NA as result. Such as `cha_ver` and `factor_ver` these two variables in the dataframe.
+
+```{r}
+mean_cha = mean(pull(sample_df,cha_ver))
+mean_factor = mean(pull(sample_df,factor_ver))
+mean_cha
+mean_factor
+```
+
+#### Explicitly convert variables
+
+Using `as.numeric` function to convert the logical, character, and factor variables.
+
+```{r results='hide', warning=FALSE}
+log_ver_N = as.numeric(pull(sample_df, log_ver))
+cha_ver_N = as.numeric(pull(sample_df, cha_ver))
+factor_ver_N = as.numeric(pull(sample_df, factor_ver))
+```
+
+After applying `as.numeric` function to convert the logical, character, and factor variables, as logical variables are Boolean, it can be convert to numeric values, which *"1"* represent *"TRUE"* and *"0"* represent *"FALSE"*. This can also explain that logical variables can apply `mean()` function.
+
+At the same time, although the `mean()` function consider the character in  `factor_ver` column and can not calculate the mean of the vectors, the levels in factor variables can also represent the character vectors. Additionally, levels can be represented by different numeric variables, this may explain why the factor variable can not be averaged, but can be converted to a numeric variable.
+
+However, the character variables do not have levels, and can not be converted to numeric variables. In this case, `as.numeric` function will return NAs.
