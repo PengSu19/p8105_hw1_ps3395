@@ -42,7 +42,8 @@ The *'early_january_weather'* dataset includes 15 variables such as:
 Plot a scatterplot of `temp` and `time_hour`, colored by `humid` variable using `ggplot()`.
 
 ```{r plot}
-scatter_plot <- ggplot(early_january_weather, aes(time_hour, temp, color = humid)) +
+scatter_plot <- 
+  ggplot(early_january_weather, aes(time_hour, temp, color = humid)) +
   geom_point()+
   xlab("Time_Hour")+
   ylab("Temperature")+
